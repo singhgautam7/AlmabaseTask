@@ -1,0 +1,19 @@
+db.sqlite3
+
+*.xml
+*.zip
+
+#Migrations
+.idea/*
+.idea/
+.idea/HealthPotliServer.iml
+.idea/misc.xml
+__pycache__/
+__pycache__/*
+*__pycache__/*
+
+#env file
+.env
+.vscode/
+AlmabaseTask/.env
+
