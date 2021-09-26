@@ -13,9 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from django.core.management.utils import get_random_secret_key
 from pathlib import Path
 import os
-import environ
 import sys
-import dj_database_url
 import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,17 +21,14 @@ import keys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env(DEBUG=(bool, False))
-environ.Env.read_env(os.path.join(BASE_DIR, 'AlmabaseTask/.env'))
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECRET_KEY = env(keys.ENV_SECRET_KEY)
 # DEBUG = env(keys.ENV_DEBUG)
 # ALLOWED_HOSTS = env(keys.ENV_ALLOWED_HOSTS)
-DEBUG = False
-SECRET_KEY = os.environ.get(keys.ENV_SECRET_KEY)
+DEBUG = True
+SECRET_KEY = os.environ.get(keys.ENV_SECRET_KEY) or get_random_secret_key()
 ALLOWED_HOSTS = '127.0.0.1,localhost,*'
 
 # Application definition
@@ -130,13 +125,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_ROOT = "/app/staticfiles/"
-STATICFILES_DIRS = (Path(BASE_DIR).joinpath('static'),)
+STATIC_ROOT = os.path.dirname(os.path.realpath(__file__))
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"), ]
 
-# STATIC_URL = '/static/'
+print(STATIC_URL, STATIC_ROOT, STATICFILES_DIRS)
+
+# STATIC_URL = '/static_t/'
 # STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
+#     os.path.join(BASE_DIR, "static_t"),
 # ]
 
 # Default primary key field type
