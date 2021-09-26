@@ -23,11 +23,8 @@ import keys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env(DEBUG=(bool, False))
+env = environ.Env(DEBUG=(bool, True))
 environ.Env.read_env(os.path.join(BASE_DIR, 'AlmabaseTask/.env'))
-
-# env = environ.Env(DEBUG=(bool, False))
-# environ.Env.read_env(os.path.join(BASE_DIR, 'AlmabaseTask/.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -35,7 +32,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, 'AlmabaseTask/.env'))
 # SECRET_KEY = env(keys.ENV_SECRET_KEY)
 # DEBUG = env(keys.ENV_DEBUG)
 # ALLOWED_HOSTS = env(keys.ENV_ALLOWED_HOSTS)
-DEBUG = True
+DEBUG = env(keys.ENV_DEBUG)
 SECRET_KEY = os.environ.get(keys.ENV_SECRET_KEY)
 ALLOWED_HOSTS = '127.0.0.1,localhost,*'
 
