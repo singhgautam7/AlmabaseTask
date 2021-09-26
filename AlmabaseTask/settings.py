@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from django.core.management.utils import get_random_secret_key
 from pathlib import Path
 import os
+import environ
 import sys
 import dj_database_url
 import django_heroku
@@ -22,18 +23,19 @@ import keys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env(os.path.join(BASE_DIR, 'AlmabaseTask/.env'))
+
 # env = environ.Env(DEBUG=(bool, False))
 # environ.Env.read_env(os.path.join(BASE_DIR, 'AlmabaseTask/.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
-DEBUG = os.getenv("DEBUG", "False") == "True"
+SECRET_KEY = env(keys.ENV_SECRET_KEY)
+DEBUG = env(keys.ENV_DEBUG)
+ALLOWED_HOSTS = env(keys.ENV_ALLOWED_HOSTS)
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-
 
 # Application definition
 
@@ -83,19 +85,12 @@ WSGI_APPLICATION = 'AlmabaseTask.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if DEVELOPMENT_MODE is True:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
-elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-    if os.getenv("DATABASE_URL", None) is None:
-        raise Exception("DATABASE_URL environment variable not defined")
-    DATABASES = {
-        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
-    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
