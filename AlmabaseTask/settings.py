@@ -32,10 +32,13 @@ environ.Env.read_env(os.path.join(BASE_DIR, 'AlmabaseTask/.env'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-SECRET_KEY = env(keys.ENV_SECRET_KEY)
-DEBUG = env(keys.ENV_DEBUG)
-ALLOWED_HOSTS = env(keys.ENV_ALLOWED_HOSTS)
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
+# SECRET_KEY = env(keys.ENV_SECRET_KEY)
+# DEBUG = env(keys.ENV_DEBUG)
+# ALLOWED_HOSTS = env(keys.ENV_ALLOWED_HOSTS)
+
+SECRET_KEY = os.environ.get(keys.ENV_SECRET_KEY)
+DEBUG = os.environ.get(keys.ENV_DEBUG)
+ALLOWED_HOSTS = os.environ.get(keys.ENV_ALLOWED_HOSTS)
 
 # Application definition
 
