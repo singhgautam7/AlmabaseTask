@@ -32,7 +32,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, 'AlmabaseTask/.env'))
 # SECRET_KEY = env(keys.ENV_SECRET_KEY)
 # DEBUG = env(keys.ENV_DEBUG)
 # ALLOWED_HOSTS = env(keys.ENV_ALLOWED_HOSTS)
-DEBUG = True
+DEBUG = False
 SECRET_KEY = os.environ.get(keys.ENV_SECRET_KEY)
 ALLOWED_HOSTS = '127.0.0.1,localhost,*'
 
